@@ -1,0 +1,14 @@
+{
+    "name": "franceioi/login-module-client",
+    "description": "Login Module Client Library",
+    "license": "MIT",
+    "require": {
+        "php": "^5.4|^7.0",
+        "league/oauth2-client": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FranceIOI\\LoginModule\\Client\\": "src/"
+        }
+    }
+}
