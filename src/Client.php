@@ -12,6 +12,7 @@ class Client
     const DEFAULT_OPTIONS = [
         'id' => null,
         'secret' => null,
+        'scope' => 'account',
         'base_url' => 'http://login-module.mobydimk.space'
     ];
 
@@ -73,7 +74,7 @@ class Client
         return [
             'clientId' => $this->options['id'],
             'clientSecret' => $this->options['secret'],
-            'scope' => isset($this->options['scope']) ? $this->options['scope'] : 'account',
+            'scope' => $this->options['scope'],
             'urlAuthorize' => $this->options['base_url'].'/oauth/authorize',
             'urlAccessToken' => $this->options['base_url'].'/oauth/token',
             'urlResourceOwnerDetails' => $this->options['base_url'].'/api/account'
