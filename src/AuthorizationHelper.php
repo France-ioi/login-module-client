@@ -5,26 +5,45 @@ namespace FranceIOI\LoginModuleClient;
 use FranceIOI\LoginModuleClient\Exceptions\LoginModuleClientException;
 use FranceIOI\LoginModuleClient\Session\SessionHandlerInterface;
 use FranceIOI\LoginModuleClient\AccessTokenStore;
+use FranceIOI\LoginModuleClient\CsrfProtector;
 
 class AuthorizationHelper
 {
 
     private $provider;
     private $access_token_store;
+    private $session;
+    private $scope;
 
-
-    public function __construct($provider, SessionHandlerInterface $session)
+    public function __construct($provider, SessionHandlerInterface $session, array $options)
     {
         $this->provider = $provider;
+        $this->session = $session;
         $this->access_token_store = new AccessTokenStore($session);
+        $this->scope = $options['scope'];
+    }
+
+
+    public function getUrl()
+    {
+        $url = $this->provider->getAuthorizationUrl([
+            'scope' => $this->scope
+        ]);
+        $state = $this->provider->getState();
+        $csrf_potector = new CsrfProtector($this->session);
+        $csrf_potector->pushState($state);
+        return $url;
     }
 
 
     public function handleRequestParams(array $params)
     {
+        if (isset($params['error'])) {
+            throw new LoginModuleClientException('Access denied');
+        }
         $this->validateParams($params);
         $csrf_protector = new CsrfProtector($this->session);
-        if(!$csrf_protector->validate($params['state'])) {
+        if (!$csrf_protector->validateState($params['state'])) {
             throw new LoginModuleClientException('Invalid state');
         }
         $access_token = $this->provider->getAccessToken('authorization_code', [
@@ -36,22 +55,24 @@ class AuthorizationHelper
 
     public function queryUser()
     {
-        if(!$access_token = $this->access_token_store->get()) {
+        if (!$access_token = $this->access_token_store->get()) {
             throw new LoginModuleClientException('Unauthorized, empty access token');
         }
-        if($access_token->hasExpired()) {
+        if ($access_token->hasExpired()) {
+            dd('a');
             $access_token = $this->provider->getAccessToken('refresh_token', [
                 'refresh_token' => $access_token->getRefreshToken()
             ]);
+            $this->access_token_store->set($access_token);
         }
-        return $access_token;
+        return $this->provider->getResourceOwner($access_token)->toArray();
     }
 
 
     private function validateParams(array $params)
     {
         $missing = array_diff($this->getRequiredParams(), array_keys($params));
-        if(!empty($missing)) {
+        if (!empty($missing)) {
             throw new LoginModuleClientException('Required params missed: ' . implode(', ', $missing));
         }
     }

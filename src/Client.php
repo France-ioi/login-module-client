@@ -12,6 +12,7 @@ class Client
     const DEFAULT_OPTIONS = [
         'id' => null,
         'secret' => null,
+        'redirect_uri' => null,
         'scope' => 'account',
         'base_url' => 'http://login-module.mobydimk.space'
     ];
@@ -31,10 +32,7 @@ class Client
 
     public function getRedirectHelper()
     {
-        return new RedirectHelper(
-            $this->getProvider(),
-            $this->getSession(),
-            $this->options
+        return new RedirectHelper($this->options);
     }
 
 
@@ -42,16 +40,16 @@ class Client
     {
         return new AuthorizationHelper(
             $this->getProvider(),
-            $this->getSession()
+            $this->getSession(),
+            $this->options
         );
     }
 
 
     private function getProvider()
     {
-        if(!$this->provider instanceof \League\OAuth2\Client\Provider\GenericProvider) {
-            $provider_options = $this->getProviderOptions();
-            $this->provider = \League\OAuth2\Client\Provider\GenericProvider($provider_options);
+        if (!$this->provider instanceof \League\OAuth2\Client\Provider\GenericProvider) {
+            $this->provider = new \League\OAuth2\Client\Provider\GenericProvider($this->getProviderOptions());
         }
         return $this->provider;
     }
@@ -59,10 +57,10 @@ class Client
 
     private function getSession()
     {
-        if(isset($this->options['session_handler']) && $this->options['session_handler'] instanceof SessionHandlerInterface) {
+        if (isset($this->options['session_handler']) && $this->options['session_handler'] instanceof SessionHandlerInterface) {
             return $this->options['session_handler'];
         }
-        if(!$this->session instanceof SessionHandlerInterface) {
+        if (!$this->session instanceof SessionHandlerInterface) {
             $this->session = new SessionHandler;
         }
         return $this->session;
@@ -74,18 +72,18 @@ class Client
         return [
             'clientId' => $this->options['id'],
             'clientSecret' => $this->options['secret'],
-            'scope' => $this->options['scope'],
             'urlAuthorize' => $this->options['base_url'].'/oauth/authorize',
             'urlAccessToken' => $this->options['base_url'].'/oauth/token',
-            'urlResourceOwnerDetails' => $this->options['base_url'].'/api/account'
-        ]
+            'urlResourceOwnerDetails' => $this->options['base_url'].'/api/account',
+            'redirectUri' => $this->options['redirect_uri']
+        ];
     }
 
 
     private function validateOptions(array $options)
     {
         $missing = array_diff($this->getRequiredOptions(), array_keys($options));
-        if(!empty($missing)) {
+        if (!empty($missing)) {
             throw new LoginModuleClientException('Required options missed: ' . implode(', ', $missing));
         }
     }
@@ -93,7 +91,7 @@ class Client
 
     private function getRequiredOptions()
     {
-        return [ 'id', 'secret' ];
+        return [ 'id', 'secret', 'redirect_uri' ];
     }
 
 }

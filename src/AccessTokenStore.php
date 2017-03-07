@@ -21,8 +21,8 @@ class AccessTokenStore
 
     public function get()
     {
-        if(!$this->access_token) {
-            if($this->access_token = $this->session->get(self::SESSION_KEY)) {
+        if (!$this->access_token) {
+            if ($this->access_token = $this->session->get(self::SESSION_KEY)) {
                 $this->access_token = unserialize($this->access_token);
             }
         }

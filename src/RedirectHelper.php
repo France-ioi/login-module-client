@@ -5,43 +5,27 @@ namespace FranceIOI\LoginModuleClient;
 use FranceIOI\LoginModuleClient\Exceptions\LoginModuleClientException;
 use FranceIOI\LoginModuleClient\Session\SessionHandlerInterface;
 use FranceIOI\LoginModuleClient\Session\SessionHandler;
-use FranceIOI\LoginModuleClient\CsrfProtector;
+
 
 class RedirectHelper
 {
 
-    private $provider;
-    private $session;
     private $client_id;
     private $base_url;
 
 
-    public function __construct($provider, $session, array $options) {
-        $this->client_id = $options['client_id'];
+    public function __construct(array $options) {
+        $this->client_id = $options['id'];
         $this->base_url = rtrim($options['base_url'], '/');
-        $this->provider = $provider;
-        $this->session = $session;
     }
 
 
-    private function formatUrl($path, $redirect_uri) {
-        $query = [
-            'client_id' => $this->client_id,
-        ];
+    private function formatUrl($path, $redirect_uri, $query = []) {
+        $query['client_id'] = $this->client_id;
         if($redirect_uri) {
             $query['redirect_uri'] = $redirect_uri;
         }
-        return $this->base_url.'/'.$path.http_build_query($query);
-    }
-
-
-    public function getAuthorizationUrl($redirect_uri) {
-        $state = $this->provider->getState();
-        $csrf_potector = new CsrfProtector($this->session);
-        $csrf_potector->pushState($state);
-        return $this->provider->getAuthorizationUrl([
-            'redirect_uri' => $redirect_uri
-        ]);
+        return $this->base_url.'/'.$path.'?'.http_build_query($query);
     }
 
 
@@ -59,7 +43,9 @@ class RedirectHelper
 
     public function getProfileUrl($redirect_uri = false)
     {
-        return $this->formatUrl('profile', $redirect_uri);
+        return $this->formatUrl('profile', $redirect_uri, [
+            'all' => 1
+        ]);
     }
 
 
