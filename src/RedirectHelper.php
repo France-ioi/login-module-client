@@ -55,9 +55,9 @@ class RedirectHelper
     }
 
 
-    public function getAuthConnectionsUrl($redirect_uri = false)
+    public function getAuthMethodsUrl($redirect_uri = false)
     {
-        return $this->formatUrl('auth_connections', $redirect_uri);
+        return $this->formatUrl('auth_methods', $redirect_uri);
     }
 
 
