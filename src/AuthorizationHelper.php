@@ -15,6 +15,7 @@ class AuthorizationHelper
     private $session;
     private $scope;
 
+
     public function __construct($provider, SessionHandlerInterface $session, array $options)
     {
         $this->provider = $provider;
