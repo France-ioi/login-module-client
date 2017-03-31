@@ -59,7 +59,6 @@ class AuthorizationHelper
             throw new LoginModuleClientException('Unauthorized, empty access token');
         }
         if ($access_token->hasExpired()) {
-            dd('a');
             $access_token = $this->provider->getAccessToken('refresh_token', [
                 'refresh_token' => $access_token->getRefreshToken()
             ]);
