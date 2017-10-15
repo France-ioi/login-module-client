@@ -25,7 +25,7 @@ class AuthorizationHelper
     }
 
 
-    public function getUrl()
+    public function getUrl($query = null)
     {
         $url = $this->provider->getAuthorizationUrl([
             'scope' => $this->scope
@@ -33,6 +33,10 @@ class AuthorizationHelper
         $state = $this->provider->getState();
         $csrf_potector = new CsrfProtector($this->session);
         $csrf_potector->pushState($state);
+
+        if(is_array($query) && count($query)) {
+            $url .= '&'.http_build_query($query);
+        }
         return $url;
     }
 

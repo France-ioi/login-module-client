@@ -12,19 +12,16 @@ class RedirectHelper
 
     private $client_id;
     private $base_url;
-    private $language;
 
 
     public function __construct(array $options) {
         $this->client_id = $options['id'];
-        $this->language = $options['language'];
         $this->base_url = rtrim($options['base_url'], '/');
     }
 
 
     private function formatUrl($path, $redirect_uri, $query = []) {
         $query['client_id'] = $this->client_id;
-        $query['language'] = $this->language;
         if($redirect_uri) {
             $query['redirect_uri'] = $redirect_uri;
         }
