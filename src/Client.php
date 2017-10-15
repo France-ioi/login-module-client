@@ -14,7 +14,8 @@ class Client
         'secret' => null,
         'redirect_uri' => null,
         'scope' => 'account',
-        'base_url' => 'http://login-module.mobydimk.space'
+        'base_url' => 'http://login-module.mobydimk.space',
+        'language' => null
     ];
 
     private $options;
