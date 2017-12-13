@@ -19,23 +19,23 @@ class ApiRequest
 
     public function send($path, $params)
     {
-        $body = [
-            'client_id' => $this->options['id'],
-            'data' => $this->encode($params, $this->options['secret'])
+        $data = [
+            'form_params' => [
+                'client_id' => $this->options['id'],
+                'data' => $this->encode($params, $this->options['secret'])
+            ]
         ];
-
-        $res = $this->http_client->post($this->getUrl($path), $body);
-
+        $res = $this->http_client->request('POST', $this->getUrl($path), $data);
         if($res->getStatusCode() == 200) {
-            return $this->decode($req->getBody(), $this->options['secret']);
+            return $this->decode($res->getBody(), $this->options['secret']);
         } else {
-            throw new \Excepton($req->getBody());
+            throw new \Excepton($res->getBody());
         }
     }
 
 
     public function getUrl($path) {
-        return $this->options['base_path'].$path;
+        return $this->options['base_url'].$path;
     }
 
 
@@ -46,9 +46,9 @@ class ApiRequest
     }
 
 
-    public function decode($body, $secret) {
-        $res = json_decode($body);
-        $res = openssl_decrypt($res, self::CIPHER_METHOD, $secret);
+    public function decode($data, $secret) {
+        $res = openssl_decrypt($data, self::CIPHER_METHOD, $secret);
+        $res = json_decode($res, true);
         return $res;
     }
 

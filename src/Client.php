@@ -5,7 +5,7 @@ namespace FranceIOI\LoginModuleClient;
 use FranceIOI\LoginModuleClient\Exceptions\LoginModuleClientException;
 use FranceIOI\LoginModuleClient\Session\SessionHandlerInterface;
 use FranceIOI\LoginModuleClient\Session\SessionHandler;
-use FranceIOI\LoginModuleClient\Session\Accounts\AccountsManager;
+use FranceIOI\LoginModuleClient\Accounts\AccountsManager;
 
 class Client
 {
@@ -42,6 +42,14 @@ class Client
         return new AuthorizationHelper(
             $this->getProvider(),
             $this->getSession(),
+            $this->options
+        );
+    }
+
+
+    public function getAccountsManager()
+    {
+        return new AccountsManager(
             $this->options
         );
     }
@@ -95,12 +103,5 @@ class Client
         return [ 'id', 'secret', 'redirect_uri' ];
     }
 
-
-    private function getAccountsManager()
-    {
-        return new AccountsManager(
-            $this->options
-        );
-    }
 
 }

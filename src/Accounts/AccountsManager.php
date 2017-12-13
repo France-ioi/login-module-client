@@ -10,7 +10,7 @@ class AccountsManager
 
     public function __construct(array $options)
     {
-        $this->api = new ApiRequest;
+        $this->api = new ApiRequest($options);
     }
 
 
