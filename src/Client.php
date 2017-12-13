@@ -5,6 +5,7 @@ namespace FranceIOI\LoginModuleClient;
 use FranceIOI\LoginModuleClient\Exceptions\LoginModuleClientException;
 use FranceIOI\LoginModuleClient\Session\SessionHandlerInterface;
 use FranceIOI\LoginModuleClient\Session\SessionHandler;
+use FranceIOI\LoginModuleClient\Session\Accounts\AccountsManager;
 
 class Client
 {
@@ -74,7 +75,7 @@ class Client
             'clientSecret' => $this->options['secret'],
             'urlAuthorize' => $this->options['base_url'].'/oauth/authorize',
             'urlAccessToken' => $this->options['base_url'].'/oauth/token',
-            'urlResourceOwnerDetails' => $this->options['base_url'].'/api/account',
+            'urlResourceOwnerDetails' => $this->options['base_url'].'/user_api/account',
             'redirectUri' => $this->options['redirect_uri']
         ];
     }
@@ -92,6 +93,14 @@ class Client
     private function getRequiredOptions()
     {
         return [ 'id', 'secret', 'redirect_uri' ];
+    }
+
+
+    private function getAccountsManager()
+    {
+        return new AccountsManager(
+            $this->options
+        );
     }
 
 }
