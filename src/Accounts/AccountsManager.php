@@ -14,11 +14,12 @@ class AccountsManager
     }
 
 
-    public function create($prefix, $amount)
+    public function create($prefix, $amount, $auto_login = false)
     {
         return $this->api->send('/platform_api/accounts_manager/create', [
             'prefix' => $prefix,
-            'amount' => $amount
+            'amount' => $amount,
+            'auto_login' => $auto_login
         ]);
     }
 
