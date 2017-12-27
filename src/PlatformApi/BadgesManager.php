@@ -1,11 +1,13 @@
 <?php
 
-namespace FranceIOI\LoginModuleClient\Accounts;
+namespace FranceIOI\LoginModuleClient\PlatformApi;
 
 class BadgesManager
 {
 
-    private $options;
+
+    protected $options;
+    protected $api;
 
 
     public function __construct(array $options)

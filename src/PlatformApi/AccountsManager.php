@@ -1,6 +1,6 @@
 <?php
 
-namespace FranceIOI\LoginModuleClient\Accounts;
+namespace FranceIOI\LoginModuleClient\PlatformApi;
 
 class AccountsManager
 {
