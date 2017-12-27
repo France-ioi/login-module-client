@@ -5,8 +5,8 @@ namespace FranceIOI\LoginModuleClient\Accounts;
 class AccountsManager
 {
 
-    private $options;
-
+    protected $options;
+    protected $api;
 
     public function __construct(array $options)
     {

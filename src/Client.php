@@ -5,7 +5,8 @@ namespace FranceIOI\LoginModuleClient;
 use FranceIOI\LoginModuleClient\Exceptions\LoginModuleClientException;
 use FranceIOI\LoginModuleClient\Session\SessionHandlerInterface;
 use FranceIOI\LoginModuleClient\Session\SessionHandler;
-use FranceIOI\LoginModuleClient\Accounts\AccountsManager;
+use FranceIOI\LoginModuleClient\PlatformApi\AccountsManager;
+use FranceIOI\LoginModuleClient\PlatformApi\BadgesManager;
 
 class Client
 {
@@ -50,6 +51,14 @@ class Client
     public function getAccountsManager()
     {
         return new AccountsManager(
+            $this->options
+        );
+    }
+
+
+    public function getBadgesManager()
+    {
+        return new BadgesManager(
             $this->options
         );
     }
