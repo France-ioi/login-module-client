@@ -16,11 +16,10 @@ class BadgesManager
     }
 
 
-    public function resetDoNotPosess($user_id, $code)
+    public function resetDoNotPossess($user_id)
     {
-        return $this->api->send('/platform_api/badges_manager/reset_do_not_posess', [
-            'user_id' => $user_id,
-            'code' => $code
+        return $this->api->send('/platform_api/badges_manager/reset_do_not_possess', [
+            'user_id' => $user_id
         ]);
     }
 
