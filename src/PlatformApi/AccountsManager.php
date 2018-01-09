@@ -14,20 +14,14 @@ class AccountsManager
     }
 
 
-    public function create($prefix, $amount, $auto_login = false)
+    public function create($params)
     {
-        return $this->api->send('/platform_api/accounts_manager/create', [
-            'prefix' => $prefix,
-            'amount' => $amount,
-            'auto_login' => $auto_login
-        ]);
+        return $this->api->send('/platform_api/accounts_manager/create', $params);
     }
 
 
-    public function delete($prefix)
+    public function delete($params)
     {
-        return $this->api->send('/platform_api/accounts_manager/delete', [
-            'prefix' => $prefix
-        ]);
+        return $this->api->send('/platform_api/accounts_manager/delete', $params);
     }
 }
