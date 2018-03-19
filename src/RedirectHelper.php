@@ -66,4 +66,9 @@ class RedirectHelper
         return $this->formatUrl('badge', $redirect_uri);
     }
 
+
+    public function getVerificationUrl($redirect_uri = false)
+    {
+        return $this->formatUrl('verification', $redirect_uri);
+    }
 }
