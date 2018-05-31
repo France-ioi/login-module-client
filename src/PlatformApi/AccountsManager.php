@@ -24,4 +24,10 @@ class AccountsManager
     {
         return $this->api->send('/platform_api/accounts_manager/delete', $params);
     }
+
+
+    public function unlinkClient($params)
+    {
+        return $this->api->send('/platform_api/accounts_manager/unlink_client', $params);
+    }
 }
