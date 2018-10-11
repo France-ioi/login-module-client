@@ -13,6 +13,10 @@ class LtiInterface
         $this->api = new ApiRequest($options);
     }
 
+    public function entry($params)
+    {
+        return $this->api->send('/platform_api/lti/entry', $params);
+    }
 
     public function sendResult($params)
     {
