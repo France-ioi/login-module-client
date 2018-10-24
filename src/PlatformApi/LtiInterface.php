@@ -15,12 +15,12 @@ class LtiInterface
 
     public function entry($params)
     {
-        return $this->api->send('/platform_api/lti/entry', $params);
+        return $this->api->send('/api/lti/entry', $params);
     }
 
     public function sendResult($params)
     {
-        return $this->api->send('/platform_api/lti/send_result', $params);
+        return $this->api->send('/api/lti/send_result', $params);
     }
 
 }
