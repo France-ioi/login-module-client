@@ -32,7 +32,7 @@ class AccountsManager
     }
 
 
-    public function getParticipationCodes($params)
+    public function participationCodes($params)
     {
         return $this->api->send('/platform_api/accounts_manager/participation_codes', $params);
     }
