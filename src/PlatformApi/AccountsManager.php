@@ -30,4 +30,10 @@ class AccountsManager
     {
         return $this->api->send('/platform_api/accounts_manager/unlink_client', $params);
     }
+
+
+    public function getParticipationCodes($params)
+    {
+        return $this->api->send('/platform_api/accounts_manager/participation_codes', $params);
+    }
 }
