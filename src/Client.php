@@ -111,7 +111,7 @@ class Client
     {
         $missing = array_diff($this->getRequiredOptions(), array_keys($options));
         if (!empty($missing)) {
-            throw new LoginModuleClientException('Required options missed: ' . implode(', ', $missing));
+            throw new LoginModuleClientException('Login module options missed: ' . implode(', ', $missing));
         }
     }
 
