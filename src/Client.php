@@ -13,9 +13,9 @@ class Client
 {
 
     const DEFAULT_OPTIONS = [
-        'id' => null,
-        'secret' => null,
-        'redirect_uri' => null,
+        //'id' => null,
+        //'secret' => null,
+        //'redirect_uri' => null,
         'scope' => 'account',
         'base_url' => 'http://login-module.mobydimk.space'
     ];
