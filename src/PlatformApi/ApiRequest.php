@@ -23,13 +23,14 @@ class ApiRequest
             'form_params' => [
                 'client_id' => $this->options['id'],
                 'data' => $this->encode($params, $this->options['secret'])
-            ]
+            ],
+            'http_errors' => false
         ];
         $res = $this->http_client->request('POST', $this->getUrl($path), $data);
         if($res->getStatusCode() == 200) {
             return $this->decode($res->getBody(), $this->options['secret']);
         } else {
-            throw new \Excepton($res->getBody());
+            throw new \Exception($res->getBody());
         }
     }
 
