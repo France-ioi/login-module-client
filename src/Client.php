@@ -8,6 +8,7 @@ use FranceIOI\LoginModuleClient\Session\SessionHandler;
 use FranceIOI\LoginModuleClient\PlatformApi\AccountsManager;
 use FranceIOI\LoginModuleClient\PlatformApi\BadgesManager;
 use FranceIOI\LoginModuleClient\PlatformApi\LtiInterface;
+use FranceIOI\LoginModuleClient\PlatformApi\LtiRequestInterface;
 
 class Client
 {
@@ -68,6 +69,13 @@ class Client
     public function getLtiInterface()
     {
         return new LtiInterface(
+            $this->options
+        );
+    }
+
+    public function getLtiRequestInterface()
+    {
+        return new LtiRequestInterface(
             $this->options
         );
     }
