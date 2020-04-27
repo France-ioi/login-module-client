@@ -15,7 +15,7 @@ class LtiRequestInterface
 
     public function sendResult($params)
     {
-        return $this->api->send('/platform_api/lti_request/send_result', $params);
+        return $this->api->send('/platform_api/lti_result/send', $params);
     }
 
 }
