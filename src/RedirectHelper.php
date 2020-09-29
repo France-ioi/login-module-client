@@ -51,7 +51,9 @@ class RedirectHelper
 
     public function getPasswordUrl($redirect_uri = false)
     {
-        return $this->formatUrl('password', $redirect_uri);
+        return $this->formatUrl('auth_methods', $redirect_uri, [
+            'show_password_form' => '1'
+        ]);
     }
 
 
