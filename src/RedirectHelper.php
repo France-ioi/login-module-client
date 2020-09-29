@@ -55,6 +55,12 @@ class RedirectHelper
     }
 
 
+    public function getRecoverUrl($redirect_uri = false)
+    {
+        return $this->formatUrl('password/reset', $redirect_uri);
+    }
+
+
     public function getAuthMethodsUrl($redirect_uri = false)
     {
         return $this->formatUrl('auth_methods', $redirect_uri);
