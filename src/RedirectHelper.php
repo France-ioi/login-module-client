@@ -29,6 +29,7 @@ class RedirectHelper
     }
 
 
+    // legacy method
     public function getAccountUrl($redirect_uri = false)
     {
         return $this->formatUrl('account', $redirect_uri);
@@ -79,4 +80,9 @@ class RedirectHelper
     {
         return $this->formatUrl('verification', $redirect_uri);
     }
+
+    public function getAdminInterfaceUrl($section = 'users')
+    {
+        return $this->base_url.'/admin_interface/'.$this->client_id.'/'.$section;
+    }    
 }
