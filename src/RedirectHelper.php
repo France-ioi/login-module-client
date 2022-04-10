@@ -83,6 +83,6 @@ class RedirectHelper
 
     public function getAdminInterfaceUrl($section = 'users')
     {
-        return $this->base_url.'/admin_interface/'.$this->client_id.'/'.$section;
+        return $this->base_url.'/client_admin/'.$this->client_id.'/'.$section;
     }    
 }
